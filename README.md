@@ -1,51 +1,35 @@
-# DEX Volume + Fee Analysis
+# dex-volume-fee-analysis
 
-A Dune Analytics dashboard tracking decentralized exchange (DEX) volume, fee revenue, and market share across Ethereum protocols.
+DEX volume and fee tracking across Ethereum protocols. Pulls from Dune's `dex.trades` spellbook, covers the last 30-90 days.
 
-## Dashboard
+**Dashboard:** https://dune.com/harshit_dabra/dex-volume-fee-analysis
 
-**Live Dashboard:** [dune.com/harshit_dabra/dex-volume-fee-analysis](https://dune.com/harshit_dabra/dex-volume-fee-analysis)
+---
 
-## Overview
+## What's in here
 
-On-chain analytics for Ethereum DEX activity using the `dex.trades` spellbook table on Dune Analytics. Covers the last 30-90 days of trading data across all major DEX protocols.
+Four SQL queries that together give a clear picture of DEX activity on Ethereum:
 
-## Key Metrics (30-day snapshot)
+- Which protocols are doing the most volume day-by-day
+- How market share shifts between Uniswap, Curve, Balancer, etc.
+- Where fee revenue is coming from and how it trends
+- A 30-day summary with totals and per-protocol breakdown
 
-| Metric | Value |
-|--------|-------|
-| Total DEX Volume | ~$39.9B |
-| Total Trades | ~10.7M |
-| Estimated Fee Revenue | ~$119.6M |
-| Active Protocols | 29 |
+## Files
 
-Uniswap dominates with ~63% of total volume.
+| File | What it does |
+|------|-------------|
+| `01_dex_daily_volume_by_protocol_90d.sql` | Daily volume per DEX protocol over 90 days |
+| `02_dex_volume_market_share_30d.sql` | Market share % per protocol over 30 days |
+| `03_dex_daily_fee_revenue_30d.sql` | Estimated fee revenue by protocol, daily |
+| `04_dex_summary_stats_30d.sql` | 30-day totals: volume, trades, fees, active protocols |
 
-## Queries
+Dune queries: [7722580](https://dune.com/queries/7722580) · [7722600](https://dune.com/queries/7722600) · [7722613](https://dune.com/queries/7722613) · [7722626](https://dune.com/queries/7722626)
 
-| File | Description | Dune Link |
-|------|-------------|-----------|
-| 01_dex_daily_volume_by_protocol_90d.sql | Daily DEX trading volume by protocol over 90 days | https://dune.com/queries/7722580 |
-| 02_dex_volume_market_share_30d.sql | Volume market share breakdown by protocol over 30 days | https://dune.com/queries/7722600 |
-| 03_dex_daily_fee_revenue_30d.sql | Estimated daily fee revenue by protocol over 30 days | https://dune.com/queries/7722613 |
-| 04_dex_summary_stats_30d.sql | Aggregate KPI stats: total volume, trades, fees, active protocols | https://dune.com/queries/7722627 |
+## Numbers (30-day snapshot)
 
-## Visualizations
+Uniswap runs about 63% of total DEX volume on Ethereum. Total volume across all protocols was around $39.9B with ~$119M in estimated fees over 30 days.
 
-- Stacked Bar Chart - Daily DEX volume by protocol (90d trend)
-- Pie Donut Chart - Volume market share by protocol (30d)
-- Stacked Bar Chart - Estimated daily fee revenue by protocol (30d)
-- KPI Counters - Total volume, total trades, estimated fee revenue
+## Usage
 
-## Data Source
-
-All queries use the dex.trades spellbook table on Dune Analytics, filtered for blockchain = ethereum and valid amount_usd.
-
-Note on fees: Fee revenue is estimated using a 0.3% baseline multiplier on trade volume (amount_usd * 0.003).
-
-## Tech Stack
-
-- Platform: Dune Analytics
-- Query Language: SQL (DuneSQL / Trino)
-- Spellbook Table: dex.trades
-- Chain: Ethereum
+Drop any query file into https://dune.com/queries/new and run it. The `dex.trades` table is public — no API key needed.
